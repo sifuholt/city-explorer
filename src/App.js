@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Movies from './Movies';
 import Cities from './Cities';
-import Weather from './Weather';
 
 
 
@@ -25,6 +24,7 @@ class App extends React.Component {
 
     }
   }
+
   handleInput = (event) => {
     this.setState({
       city: event.target.value
@@ -38,7 +38,7 @@ class App extends React.Component {
   
     try {
           // use axios to hit locationiq - async/await
-      let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json&limit=1`;
+      let url = `https://us1.locationiq.com/v1/search?key=pk.9790c77f9ad61635e1a5311b302f5545&q=${this.state.city}&format=json&limit=1`;
   
       let cityDataFromAxios = await axios.get(url);
       let lat = cityDataFromAxios.data[0].lat;
@@ -49,7 +49,7 @@ class App extends React.Component {
         isCity: true,
   
       })
-      
+
         // save data to state
       this.handleWeather(lat, lon);
       this.handleMovie();
@@ -65,8 +65,12 @@ class App extends React.Component {
   handleWeather = async (lat, lon) => {
 
     try {
+      let url = `localhost:3001/weather?lat=${lat}&lon=${lon}`;
+      console.log(url);
 
-      let weatherData = await axios.get(`${process.env.REACT_APP_SERVER}/weather?lat=${lat}&lon=${lon}`);
+      let weatherData = await axios.get(url);
+      console.log(weatherData);
+
       this.setState({
         weatherData: weatherData.data,
         isWeather: true,
@@ -85,8 +89,11 @@ class App extends React.Component {
 
 handleMovie = async () => {
   try {
+    let url = `http://localhost:3001/movies?query=${this.state.city}`;
+    console.log(url);
 
-    let movieData = await axios.get(`${process.env.REACT_APP_SERVER}/movies?city=${this.state.city}`);
+    let movieData = await axios.get(url);
+    console.log(movieData);
     this.setState({
       movieData: movieData.data
     })
@@ -112,7 +119,7 @@ render() {
       <form onSubmit={this.getCityData}>;
         <label htmlFor="">Choose Your City!
           <input type="text" onInput={this.handleInput} />;
-          <button type="submit">Get Out There!</button>;
+          <button type="submit">Get Out There!</button>
         </label>
       </form>
       <main>
@@ -121,7 +128,7 @@ render() {
             ? <p>{this.state.errorMessage}</p>
             : <div>
               <Cities cityData={this.state.cityData} />
-              <Weather weatherData={this.state.weatherData} />
+              {/* <Weather weatherData={this.state.weatherData} /> */}
               <Movies movieData={this.state.movieData} />
             </div>
         }
