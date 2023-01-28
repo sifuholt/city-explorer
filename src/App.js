@@ -4,7 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Movies from './Movies';
 import Cities from './Cities';
-
+import Weather from './Weather';
+import Button from 'react-bootstrap/Button';
 
 
 class App extends React.Component {
@@ -110,6 +111,7 @@ handleMovie = async () => {
 
 
 render() {
+  console.log(this.state);
 
 
 
@@ -119,7 +121,7 @@ render() {
       <form onSubmit={this.getCityData}>;
         <label htmlFor="">Choose Your City!
           <input type="text" onInput={this.handleInput} />;
-          <button type="submit">Get Out There!</button>
+          <Button variant="info" type="submit">Get Out There!</Button>
         </label>
       </form>
       <main>
@@ -128,7 +130,7 @@ render() {
             ? <p>{this.state.errorMessage}</p>
             : <div>
               <Cities cityData={this.state.cityData} />
-              {/* <Weather weatherData={this.state.weatherData} /> */}
+              <Weather weatherData={this.state.weatherData} />
               <Movies movieData={this.state.movieData} />
             </div>
         }

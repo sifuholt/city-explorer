@@ -13,8 +13,8 @@ class Weather extends React.Component {
             <Card style={{ width: '23rem' }} key = {index}>
               <Card.Body>
 
-                <Card.Title>Date: {event.date}</Card.Title>
-                <Card.Text>Weather: {event.description}</Card.Text>
+                <Card.Title>Date: {event.time}</Card.Title>
+                <Card.Text>Weather: {event.forecast}</Card.Text>
 
               </Card.Body>
             </Card>
@@ -27,3 +27,6 @@ class Weather extends React.Component {
 
 
 {/* <WeatherDay date={day.date} */}
+
+
+export default Weather;
